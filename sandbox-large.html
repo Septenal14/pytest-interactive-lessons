@@ -17,7 +17,7 @@
             background: #1e1e1e;
             border-radius: 8px;
             overflow: hidden;
-            height: 750px;
+            height: 850px;
             display: flex;
             flex-direction: column;
         }
@@ -47,7 +47,7 @@
 
         .run-button:hover { background: #45a049; }
 
-        #editor { height: 450px; flex-shrink: 0; }
+        #editor { height: 500px; flex-shrink: 0; }
 
         #output {
             background: #1e1e1e;
@@ -55,7 +55,7 @@
             padding: 15px;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            height: 250px;
+            height: 300px;
             overflow-y: auto;
             white-space: pre-wrap;
             border-top: 1px solid #444;
@@ -70,7 +70,7 @@
 <body>
     <div class="sandbox-container">
         <div class="sandbox-header">
-            <span class="sandbox-title">🐍 Pytest Sandbox (Large 750px)</span>
+            <span class="sandbox-title">🐍 Pytest Sandbox (Large 850px)</span>
             <button class="run-button" onclick="runPytest()">▶️ Запустить Pytest</button>
         </div>
         <div id="editor"></div>
