@@ -1,0 +1,14 @@
+{
+  "title": "Lesson 01: Конвертация типов",
+  "lesson": "python_core_01",
+  "code": "# Конвертируй типы правильно\nage_str = \"30\"\nage_int = ???  # Преобразуй строку в число\n\nprice_float = 99.99\nprice_str = ???  # Преобразуй число в строку\n\n# Тесты\nassert age_int == 30, \"age_int должно быть 30\"\nassert type(age_int) == int, \"age_int должно быть int\"\nassert price_str == \"99.99\", \"price_str должно быть '99.99'\"\nassert type(price_str) == str, \"price_str должно быть str\"",
+  "expected_fixes": [
+    {"pattern": "age_int = int(age_str)", "test": "age_int == 30"},
+    {"pattern": "price_str = str(price_float)", "test": "price_str == '99.99'"}
+  ],
+  "hints": [
+    "Используй int() для преобразования строки в число",
+    "Используй str() для преобразования числа в строку"
+  ],
+  "success_message": "🔥 Красава! Ты освоил type conversion!"
+}

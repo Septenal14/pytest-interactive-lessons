@@ -1,0 +1,12 @@
+{
+  "title": "Pytest Lesson 01: Первый Assert",
+  "lesson": "pytest_basics_01",
+  "code": "# Исправь assertion\ndef test_addition():\n    result = 2 + 2\n    assert result == ???  # Исправь!\n\ntest_addition()",
+  "expected_fixes": [
+    {"pattern": "assert result == 4", "test": "result == 4"}
+  ],
+  "hints": [
+    "2 + 2 = ?"
+  ],
+  "success_message": "🎉 Первый тест прошёл! Ты освоил assertion!"
+}

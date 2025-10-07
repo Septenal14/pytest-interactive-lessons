@@ -1,0 +1,12 @@
+{
+  "title": "Pytest Lesson 03: Parametrize Test",
+  "lesson": "pytest_basics_03",
+  "code": "# Исправь parametrize decorator\n@pytest.mark.parametrize(\"number, expected\", [\n    (2, 4),\n    (3, 9),\n    (4, ???),  # Исправь! 4^2 = ?\n])\ndef test_square(number, expected):\n    assert number ** 2 == expected\n\n# Симуляция запуска\ntest_square(2, 4)\ntest_square(3, 9)\ntest_square(4, 16)",
+  "expected_fixes": [
+    {"pattern": "(4, 16)", "test": "4^2 = 16"}
+  ],
+  "hints": [
+    "4 в квадрате = 4 * 4 = ?"
+  ],
+  "success_message": "📊 Круто! Теперь один тест проверяет 3 набора данных!"
+}

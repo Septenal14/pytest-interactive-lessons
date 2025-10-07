@@ -1,0 +1,12 @@
+{
+  "title": "Pytest Lesson 02: Simple Fixture",
+  "lesson": "pytest_basics_02",
+  "code": "# Исправь fixture decorator\n???  # Добавь декоратор!\ndef base_url():\n    return \"https://api.example.com\"\n\ndef test_url(base_url):\n    assert \"api\" in base_url\n    assert base_url.startswith(\"https\")\n\ntest_url(base_url())",
+  "expected_fixes": [
+    {"pattern": "@pytest.fixture", "test": "fixture decorator"}
+  ],
+  "hints": [
+    "Используй @pytest.fixture для создания фикстуры"
+  ],
+  "success_message": "🔧 Отлично! Ты создал свою первую fixture!"
+}
