@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pytest Lesson 01: Введение в Pytest (Full Interactive)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 25px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .sandbox-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sandbox-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sandbox-title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .run-button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .run-button:hover {
+            background: #45a049;
+        }
+
+        .run-button:active {
+            background: #3d8b40;
+        }
+
+        #editor {
+            height: 300px;
+            width: 100%;
+        }
+
+        #output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border-top: 1px solid #444;
+        }
+
+        .output-line {
+            margin: 2px 0;
+        }
+
+        .output-success {
+            color: #4caf50;
+        }
+
+        .output-error {
+            color: #f44336;
+        }
+
+        .output-info {
+            color: #2196F3;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol, ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Pytest Lesson 01: Введение в Pytest</h1>
+        <p><em>Интерактивный урок с живой песочницей Python</em></p>
+
+        <hr>
+
+        <h2>📌 Level 0: ЗАЧЕМ нужен Pytest?</h2>
+
+        <div class="info-box">
+            <strong>🎯 Твоя задача как QA:</strong>
+            <p>Представь: ты тестируешь сайт. 100 функций. Каждую неделю — новая версия.</p>
+            <p><strong>Вручную тестировать?</strong> 100 кликов × 4 недели = 400 часов работы 😱</p>
+            <p><strong>С автотестами?</strong> Написал 1 раз → запускается за 5 минут автоматически 🚀</p>
+        </div>
+
+        <div class="success-box">
+            <strong>✅ Зачем pytest:</strong>
+            <ul>
+                <li>⏱️ <strong>Экономия времени:</strong> тесты работают пока ты спишь</li>
+                <li>🐛 <strong>Раннее обнаружение багов:</strong> упал тест = нашёл баг ДО релиза</li>
+                <li>📝 <strong>Документация:</strong> тесты = примеры как работает код</li>
+                <li>🔒 <strong>Уверенность:</strong> изменил код? Тесты покажут что сломалось</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>💡 Level 1: ЧТО такое Pytest?</h2>
+
+        <p><strong>Метафора:</strong> Pytest — это как контрольная работа для кода.</p>
+
+        <div class="info-box">
+            <p><strong>Как в школе:</strong></p>
+            <ul>
+                <li>✏️ Учитель задаёт вопросы (тесты)</li>
+                <li>📝 Ты даёшь ответы (твой код)</li>
+                <li>✅ Учитель проверяет правильность (pytest запускает тесты)</li>
+                <li>📊 Получаешь оценку (отчёт: passed/failed)</li>
+            </ul>
+        </div>
+
+        <p><strong>Pytest</strong> — это фреймворк для тестирования Python кода. Он автоматически:</p>
+        <ol>
+            <li>Находит все файлы с тестами (<code>test_*.py</code>)</li>
+            <li>Запускает функции начинающиеся с <code>test_</code></li>
+            <li>Проверяет <code>assert</code> утверждения</li>
+            <li>Показывает результат (✅ passed / ❌ failed)</li>
+        </ol>
+
+        <hr>
+
+        <h2>🔧 Level 2: КАК работает Pytest?</h2>
+
+        <h3>Структура теста:</h3>
+
+        <div class="info-box">
+            <pre style="background: #2d2d2d; color: #d4d4d4; padding: 15px; border-radius: 6px; overflow-x: auto;">
+<span style="color: #569cd6;">def</span> <span style="color: #dcdcaa;">test_simple_math</span>():
+    <span style="color: #6a9955;"># Arrange (подготовка)</span>
+    a = <span style="color: #b5cea8;">2</span>
+    b = <span style="color: #b5cea8;">2</span>
+
+    <span style="color: #6a9955;"># Act (действие)</span>
+    result = a + b
+
+    <span style="color: #6a9955;"># Assert (проверка)</span>
+    <span style="color: #569cd6;">assert</span> result == <span style="color: #b5cea8;">4</span>, <span style="color: #ce9178;">"2 + 2 должно быть 4!"</span>
+</pre>
+        </div>
+
+        <p><strong>3 части теста (AAA Pattern):</strong></p>
+        <ol>
+            <li><strong>Arrange</strong> (подготовка) — готовим тестовые данные</li>
+            <li><strong>Act</strong> (действие) — выполняем тестируемую функцию</li>
+            <li><strong>Assert</strong> (проверка) — проверяем результат</li>
+        </ol>
+
+        <hr>
+
+        <h2>📝 Level 3: ПРИМЕРЫ (Real-world)</h2>
+
+        <div class="warning-box">
+            <strong>🎯 Реальная задача:</strong> Тестируем функцию логина на сайте
+        </div>
+
+        <div class="info-box">
+            <pre style="background: #2d2d2d; color: #d4d4d4; padding: 15px; border-radius: 6px; overflow-x: auto;">
+<span style="color: #569cd6;">def</span> <span style="color: #dcdcaa;">login</span>(username, password):
+    <span style="color: #569cd6;">if</span> username == <span style="color: #ce9178;">"admin"</span> <span style="color: #569cd6;">and</span> password == <span style="color: #ce9178;">"password123"</span>:
+        <span style="color: #569cd6;">return</span> <span style="color: #4ec9b0;">True</span>
+    <span style="color: #569cd6;">return</span> <span style="color: #4ec9b0;">False</span>
+
+<span style="color: #569cd6;">def</span> <span style="color: #dcdcaa;">test_login_success</span>():
+    <span style="color: #6a9955;"># Arrange</span>
+    username = <span style="color: #ce9178;">"admin"</span>
+    password = <span style="color: #ce9178;">"password123"</span>
+
+    <span style="color: #6a9955;"># Act</span>
+    result = login(username, password)
+
+    <span style="color: #6a9955;"># Assert</span>
+    <span style="color: #569cd6;">assert</span> result == <span style="color: #4ec9b0;">True</span>, <span style="color: #ce9178;">"Логин должен пройти успешно!"</span>
+
+<span style="color: #569cd6;">def</span> <span style="color: #dcdcaa;">test_login_wrong_password</span>():
+    result = login(<span style="color: #ce9178;">"admin"</span>, <span style="color: #ce9178;">"wrong"</span>)
+    <span style="color: #569cd6;">assert</span> result == <span style="color: #4ec9b0;">False</span>, <span style="color: #ce9178;">"Неверный пароль = логин НЕ пройден"</span>
+</pre>
+        </div>
+
+        <hr>
+
+        <h2>💻 Level 4: ПРАКТИКА (Живая песочница!)</h2>
+
+        <div class="warning-box">
+            <strong>🎯 Твоя задача:</strong> Запусти код ниже и посмотри как pytest показывает результаты.
+            Попробуй изменить значения и посмотреть что произойдет!
+        </div>
+
+        <div class="sandbox-container">
+            <div class="sandbox-header">
+                <span class="sandbox-title">🐍 Python + Pytest Sandbox (запускается в браузере!)</span>
+                <button class="run-button" onclick="runPytest()">▶️ Запустить Pytest</button>
+            </div>
+            <div id="editor"># Функция для тестирования
+def add(a, b):
+    return a + b
+
+# Тест 1: Успешный тест
+def test_add_positive():
+    result = add(2, 3)
+    assert result == 5, "2 + 3 должно быть 5"
+
+# Тест 2: Специально падающий тест (исправь его!)
+def test_add_negative():
+    result = add(-1, -1)
+    assert result == -2, "Исправь этот assert!"
+
+# Тест 3: Попробуй добавить свой тест здесь!
+</div>
+            <div id="output" class="loading">⏳ Загружаем Python окружение (Pyodide)... Это займет ~10 секунд при первом запуске.</div>
+        </div>
+
+        <div class="success-box">
+            <strong>💡 Подсказки:</strong>
+            <ul>
+                <li>Попробуй изменить <code>assert result == 5</code> на другое число — тест упадет!</li>
+                <li>Исправь <code>test_add_negative</code> чтобы он прошел</li>
+                <li>Добавь свой тест <code>test_multiply()</code> для проверки умножения</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>🎯 Quick Check: Проверь себя</h2>
+
+        <div class="quiz-container">
+            <p><strong>Вопрос:</strong> Что делает команда <code>assert result == 5</code>?</p>
+
+            <div style="margin: 15px 0;">
+                <label>
+                    <input type="radio" name="q1" value="1"> Присваивает переменной result значение 5
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="2" id="correct-answer"> <strong>Проверяет что result равен 5, если нет — тест падает</strong>
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="3"> Выводит на экран значение result
+                </label>
+                <label>
+                    <input type="radio" name="q1" value="4"> Создает новый тест с именем result
+                </label>
+            </div>
+
+            <button onclick="checkAnswer()">Проверить ответ</button>
+
+            <div id="feedback" style="margin-top: 15px;"></div>
+        </div>
+
+        <hr>
+
+        <h2>🔄 Spaced Repetition: Повторим главное</h2>
+
+        <div class="success-box">
+            <strong>✅ Что ты узнал сегодня:</strong>
+            <ol>
+                <li><strong>ЗАЧЕМ:</strong> Pytest экономит время, находит баги автоматически</li>
+                <li><strong>ЧТО:</strong> Pytest = контрольная работа для кода</li>
+                <li><strong>КАК:</strong> Структура теста = AAA (Arrange, Act, Assert)</li>
+                <li><strong>ПРИМЕРЫ:</strong> Тестирование функции login()</li>
+                <li><strong>ПРАКТИКА:</strong> Запустил тесты в живой песочнице!</li>
+            </ol>
+        </div>
+
+        <hr>
+
+        <h2>👀 Preview Next Lesson</h2>
+
+        <div class="info-box">
+            <p><strong>📚 Lesson 02: Fixtures — Setup и Teardown</strong></p>
+            <p>В следующем уроке узнаешь:</p>
+            <ul>
+                <li>Как подготовить данные перед тестами (setup)</li>
+                <li>Как очистить после тестов (teardown)</li>
+                <li>Как переиспользовать код между тестами</li>
+                <li>Что такое scope и зачем он нужен</li>
+            </ul>
+            <p><em>Увидимся в следующем уроке! 🚀</em></p>
+        </div>
+    </div>
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+    <!-- Pyodide (Python in browser) -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+    <script>
+        let editor;
+        let pyodide;
+        let pyodideReady = false;
+
+        // Initialize Monaco Editor
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
+
+        require(['vs/editor/editor.main'], function() {
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: document.getElementById('editor').textContent,
+                language: 'python',
+                theme: 'vs-dark',
+                fontSize: 14,
+                minimap: { enabled: false },
+                scrollBeyondLastLine: false,
+                automaticLayout: true
+            });
+        });
+
+        // Initialize Pyodide
+        async function loadPyodide() {
+            const output = document.getElementById('output');
+            try {
+                output.textContent = '⏳ Загружаем Python окружение (Pyodide)...';
+                pyodide = await loadPyodide();
+
+                // Install pytest
+                output.textContent = '⏳ Устанавливаем pytest...';
+                await pyodide.loadPackage('micropip');
+                await pyodide.runPythonAsync(`
+                    import micropip
+                    await micropip.install('pytest')
+                `);
+
+                pyodideReady = true;
+                output.innerHTML = '<span class="output-success">✅ Python окружение готово! Нажми "▶️ Запустить Pytest"</span>';
+            } catch (error) {
+                output.innerHTML = '<span class="output-error">❌ Ошибка загрузки: ' + error + '</span>';
+            }
+        }
+
+        // Run pytest
+        async function runPytest() {
+            const output = document.getElementById('output');
+
+            if (!pyodideReady) {
+                output.innerHTML = '<span class="output-error">⏳ Подождите, Python окружение еще загружается...</span>';
+                return;
+            }
+
+            const code = editor.getValue();
+            output.innerHTML = '<span class="output-info">🚀 Запускаем тесты...</span>\n';
+
+            try {
+                // Run the code and collect test results
+                const result = await pyodide.runPythonAsync(`
+import sys
+from io import StringIO
+import pytest
+
+# Write code to temporary file
+with open('/tmp/test_file.py', 'w') as f:
+    f.write("""${code.replace(/"/g, '\\"').replace(/\n/g, '\\n')}""")
+
+# Capture output
+old_stdout = sys.stdout
+sys.stdout = StringIO()
+
+# Run pytest
+exit_code = pytest.main(['/tmp/test_file.py', '-v', '--tb=short'])
+
+# Get output
+output = sys.stdout.getvalue()
+sys.stdout = old_stdout
+
+output
+                `);
+
+                // Format output with colors
+                const lines = result.split('\n');
+                let formattedOutput = '';
+
+                lines.forEach(line => {
+                    if (line.includes('PASSED')) {
+                        formattedOutput += '<span class="output-success">✅ ' + line + '</span>\n';
+                    } else if (line.includes('FAILED')) {
+                        formattedOutput += '<span class="output-error">❌ ' + line + '</span>\n';
+                    } else if (line.includes('AssertionError')) {
+                        formattedOutput += '<span class="output-error">' + line + '</span>\n';
+                    } else if (line.includes('===')) {
+                        formattedOutput += '<span class="output-info">' + line + '</span>\n';
+                    } else {
+                        formattedOutput += line + '\n';
+                    }
+                });
+
+                output.innerHTML = formattedOutput || '<span class="output-success">✅ Все тесты прошли успешно!</span>';
+
+            } catch (error) {
+                output.innerHTML = '<span class="output-error">❌ Ошибка выполнения:\n' + error + '</span>';
+            }
+        }
+
+        // Quiz function
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> Assert проверяет условие. Если result НЕ равен 5 — pytest покажет ошибку и тест упадет 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай: assert = утверждение. Мы утверждаем что result == 5. Если это НЕ так — тест падает 🤔</div>';
+            }
+        }
+
+        // Load Pyodide on page load
+        loadPyodide();
+    </script>
+</body>
+</html>
