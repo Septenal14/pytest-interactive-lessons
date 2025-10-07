@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pytest Interactive Elements</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔄 Как работает pytest под капотом?</h2>
+
+    <p>Посмотри на схему — так pytest обрабатывает твои тесты:</p>
+
+    <div class="mermaid">
+flowchart TD
+    A[pytest запущен] --> B{Найдены test_*.py?}
+    B -->|Да| C[Collect tests]
+    B -->|Нет| D[❌ ERROR: No tests found]
+    C --> E{Есть test_* функции?}
+    E -->|Да| F[Setup fixtures]
+    E -->|Нет| D
+    F --> G[Запуск теста]
+    G --> H{assert прошёл?}
+    H -->|Да| I[✅ PASSED]
+    H -->|Нет| J[❌ FAILED + traceback]
+    I --> K{Есть ещё тесты?}
+    J --> K
+    K -->|Да| F
+    K -->|Нет| L[📊 Финальный отчёт]
+    L --> M[2 passed, 1 failed]
+
+    style I fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style J fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style M fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    style D fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Пройди глазами по схеме:</strong>
+        <ol>
+            <li>Pytest ищет файлы <code>test_*.py</code></li>
+            <li>Внутри файлов ищет функции <code>test_*()</code></li>
+            <li>Запускает setup (fixtures)</li>
+            <li>Выполняет тест</li>
+            <li>Проверяет assert</li>
+            <li>Выводит результат ✅/❌</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>🎯 Quick Check: Проверь себя</h2>
+
+    <div class="quiz-container">
+        <p><strong>Вопрос:</strong> Зачем нужны автотесты?</p>
+
+        <div style="margin: 15px 0;">
+            <label>
+                <input type="radio" name="q1" value="1"> Чтобы найти баги до релиза
+            </label>
+            <label>
+                <input type="radio" name="q1" value="2"> Чтобы убедиться что старый код не сломался
+            </label>
+            <label>
+                <input type="radio" name="q1" value="3"> Чтобы ускорить регресс-тестирование
+            </label>
+            <label>
+                <input type="radio" name="q1" value="4" id="correct-answer"> <strong>Все ответы правильные</strong>
+            </label>
+        </div>
+
+        <button onclick="checkAnswer()">Проверить ответ</button>
+
+        <div id="feedback" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ Это работает!</strong>
+        <ul>
+            <li>Mermaid диаграмма рендерится автоматически</li>
+            <li>Quiz работает без внешних сервисов</li>
+            <li>Встраивается через iframe в Skill Space</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> Автотесты помогают во всём этом 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай ещё раз: автотесты нужны для всего перечисленного 🤔</div>';
+            }
+        }
+    </script>
+</body>
+</html>
