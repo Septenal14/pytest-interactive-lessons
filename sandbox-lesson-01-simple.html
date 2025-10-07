@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pytest Sandbox - Lesson 01 (Simple)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 15px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .sandbox-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sandbox-header {
+            background: #2d2d2d;
+            padding: 10px 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sandbox-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .run-button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .run-button:hover {
+            background: #45a049;
+        }
+
+        #editor {
+            height: 320px;
+            width: 100%;
+        }
+
+        #output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border-top: 1px solid #444;
+        }
+
+        .output-success {
+            color: #4caf50;
+        }
+
+        .output-error {
+            color: #f44336;
+        }
+
+        .output-info {
+            color: #2196F3;
+        }
+
+        .hint-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .hint-box ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="warning-box">
+        🎯 <strong>Твоя задача:</strong> Запусти код и посмотри как pytest показывает результаты. Попробуй изменить assert и посмотреть что произойдет!
+    </div>
+
+    <div class="sandbox-container">
+        <div class="sandbox-header">
+            <span class="sandbox-title">🐍 Python + Pytest Sandbox</span>
+            <button class="run-button" onclick="runPytest()">▶️ Запустить Pytest</button>
+        </div>
+        <div id="editor"># Функция для тестирования
+def add(a, b):
+    return a + b
+
+# Тест 1: Успешный тест
+def test_add_positive():
+    result = add(2, 3)
+    assert result == 5, "2 + 3 должно быть 5"
+
+# Тест 2: Специально падающий тест (исправь его!)
+def test_add_negative():
+    result = add(-1, -1)
+    assert result == 0, "Исправь этот assert! -1 + -1 = ?"
+
+# Тест 3: Добавь свой тест здесь!
+</div>
+        <div id="output"><span class="output-info">💡 Нажми "▶️ Запустить Pytest" чтобы увидеть результаты</span></div>
+    </div>
+
+    <div class="hint-box">
+        <strong>💡 Подсказки:</strong>
+        <ul>
+            <li>Попробуй изменить <code>assert result == 5</code> на <code>assert result == 6</code> — тест упадет!</li>
+            <li>Исправь <code>test_add_negative</code>: -1 + -1 = -2, а не 0</li>
+            <li>Добавь тест для умножения</li>
+        </ul>
+    </div>
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+    <script>
+        let editor;
+
+        // Initialize Monaco Editor
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
+
+        require(['vs/editor/editor.main'], function() {
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: document.getElementById('editor').textContent,
+                language: 'python',
+                theme: 'vs-dark',
+                fontSize: 13,
+                minimap: { enabled: false },
+                scrollBeyondLastLine: false,
+                automaticLayout: true
+            });
+        });
+
+        // Simple pytest simulator
+        function runPytest() {
+            const output = document.getElementById('output');
+            const code = editor.getValue();
+
+            output.innerHTML = '<span class="output-info">🚀 Запускаем тесты...</span>\n\n';
+
+            setTimeout(() => {
+                let result = '';
+
+                // Parse tests
+                const testFunctions = code.match(/def test_\w+\(\):/g) || [];
+                const testCount = testFunctions.length;
+
+                // Check specific assertions
+                const test1Pass = code.includes('assert result == 5') && code.includes('add(2, 3)');
+                const test2Pass = code.includes('assert result == -2') && code.includes('add(-1, -1)');
+
+                result += '<span class="output-info">test_code.py</span>\n';
+
+                // Test 1
+                if (test1Pass) {
+                    result += '<span class="output-success">  ✅ test_add_positive PASSED</span>\n';
+                } else if (code.includes('test_add_positive')) {
+                    result += '<span class="output-error">  ❌ test_add_positive FAILED</span>\n';
+                    result += '<span class="output-error">     AssertionError: 2 + 3 должно быть 5</span>\n';
+                }
+
+                // Test 2
+                if (test2Pass) {
+                    result += '<span class="output-success">  ✅ test_add_negative PASSED</span>\n';
+                } else if (code.includes('test_add_negative')) {
+                    result += '<span class="output-error">  ❌ test_add_negative FAILED</span>\n';
+                    result += '<span class="output-error">     AssertionError: Исправь этот assert! -1 + -1 = ?</span>\n';
+                    result += '<span class="output-error">     assert -2 == 0</span>\n';
+                }
+
+                // Check for test 3
+                const hasTest3 = code.match(/def test_\w+\(\):.*?assert/s) && testCount > 2;
+                if (hasTest3) {
+                    result += '<span class="output-success">  ✅ test_custom PASSED</span>\n';
+                }
+
+                // Summary
+                const passed = (test1Pass ? 1 : 0) + (test2Pass ? 1 : 0) + (hasTest3 ? 1 : 0);
+                const failed = testCount - passed;
+
+                result += '\n<span class="output-info">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>\n';
+                result += `<span class="output-info">📊 Итого: ${testCount} тестов | </span>`;
+                if (passed > 0) result += `<span class="output-success">✅ ${passed} passed</span>`;
+                if (passed > 0 && failed > 0) result += ' | ';
+                if (failed > 0) result += `<span class="output-error">❌ ${failed} failed</span>`;
+
+                if (passed === testCount && testCount > 0) {
+                    result += '\n\n<span class="output-success">🎉 Отлично! Все тесты прошли!</span>';
+                } else if (failed > 0) {
+                    result += '\n\n<span class="output-error">💡 Подсказка: Проверь значения в assert</span>';
+                }
+
+                output.innerHTML = result;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
