@@ -1,0 +1,20 @@
+{
+  "title": "Найди ошибку: AssertionError без сообщения",
+  "lesson": "pytest_basics_01",
+  "fail_first": true,
+  "initial_error": {
+    "type": "AssertionError",
+    "message": "",
+    "line": 3,
+    "explanation": "Тест упал, но непонятно ПОЧЕМУ! Добавь сообщение в assert для понятной диагностики."
+  },
+  "code": "# Запусти — увидишь непонятную ошибку!\ndef test_login_status():\n    status_code = 401\n    assert status_code == 200  # ❌ ПЛОХО! Не понятно что не так!\n\ntest_login_status()\n\n# Исправь — добавь понятное сообщение:\n# assert status_code == 200, f\"Expected 200, got {status_code}\"",
+  "expected_fixes": [
+    {"pattern": "assert status_code == 200, ", "test": "adds assertion message"}
+  ],
+  "hints": [
+    "Добавь сообщение: assert status_code == 200, f\"Expected 200, got {status_code}\"",
+    "Всегда добавляй понятные сообщения в assert для легкой отладки!"
+  ],
+  "success_message": "📝 Отлично! Теперь твои тесты читаемые! Assertion messages — best practice для pytest!"
+}

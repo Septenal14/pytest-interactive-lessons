@@ -1,0 +1,20 @@
+{
+  "title": "Найди ошибку: TypeError (str + int)",
+  "lesson": "python_core_01",
+  "fail_first": true,
+  "initial_error": {
+    "type": "TypeError",
+    "message": "can only concatenate str (not 'int') to str",
+    "line": 2,
+    "explanation": "Переменная age — это число 25, а не строка! Python не может соединить строку и число напрямую."
+  },
+  "code": "# Запусти сначала — увидишь ошибку!\nage = 25\nmessage = \"Your age is: \" + age  # ❌ ОШИБКА!\n\n# Исправь строку 3 чтобы тест прошёл:\nassert \"Your age is: 25\" in message",
+  "expected_fixes": [
+    {"pattern": "str(age)", "test": "converts age to string"}
+  ],
+  "hints": [
+    "Преобразуй число в строку: str(age)",
+    "Или используй f-строку: f\"Your age is: {age}\""
+  ],
+  "success_message": "🎉 Ты исправил TypeError! Теперь понимаешь разницу между '25' (строка) и 25 (число)!"
+}
