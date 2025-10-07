@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 03: Parametrize - One Test, Many Data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔁 Parametrize: Один тест, много данных</h2>
+
+    <p>Посмотри на схему — так pytest запускает один тест с разными параметрами:</p>
+
+    <div class="mermaid">
+flowchart TD
+    A[@pytest.mark.parametrize<br>'a, b, expected'<br>2, 3, 5<br>5, 7, 12<br>10, -2, 8] --> B[Pytest читает декоратор]
+    B --> C{Сколько наборов данных?}
+    C --> D[3 набора]
+    D --> E[Запуск #1: a=2, b=3, expected=5]
+    E --> F[def test_add a, b, expected:]
+    F --> G[result = a + b]
+    G --> H{result == expected?}
+    H -->|✅| I[Test #1 PASSED]
+    H -->|❌| J[Test #1 FAILED]
+
+    I --> K[Запуск #2: a=5, b=7, expected=12]
+    J --> K
+    K --> L[def test_add a, b, expected:]
+    L --> M[result = a + b]
+    M --> N{result == expected?}
+    N -->|✅| O[Test #2 PASSED]
+    N -->|❌| P[Test #2 FAILED]
+
+    O --> Q[Запуск #3: a=10, b=-2, expected=8]
+    P --> Q
+    Q --> R[def test_add a, b, expected:]
+    R --> S[result = a + b]
+    S --> T{result == expected?}
+    T -->|✅| U[Test #3 PASSED]
+    T -->|❌| V[Test #3 FAILED]
+
+    U --> W[📊 Итоговый отчёт<br>3 tests ran]
+    V --> W
+
+    style A fill:#FFE4B5,stroke:#ff9800,stroke-width:2px
+    style I fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style O fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style U fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style J fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style P fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style V fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style W fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Пройди глазами по схеме:</strong>
+        <ol>
+            <li><strong>Декоратор:</strong> <code>@pytest.mark.parametrize</code> содержит наборы данных</li>
+            <li><strong>Генерация:</strong> Pytest создаёт отдельный тест для каждого набора</li>
+            <li><strong>Выполнение:</strong> Каждый тест запускается с РАЗНЫМИ аргументами</li>
+            <li><strong>Отчёт:</strong> В итоге видишь результат для КАЖДОГО набора данных</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>🎯 Quick Check: Проверь себя</h2>
+
+    <div class="quiz-container">
+        <p><strong>Вопрос:</strong> Сколько тестов запустится для этого кода?</p>
+        <pre><code>@pytest.mark.parametrize("x, y", [(1, 2), (3, 4), (5, 6), (7, 8)])
+def test_sum(x, y):
+    assert x + y > 0</code></pre>
+
+        <div style="margin: 15px 0;">
+            <label>
+                <input type="radio" name="q1" value="1"> 1 тест
+            </label>
+            <label>
+                <input type="radio" name="q1" value="2"> 2 теста
+            </label>
+            <label>
+                <input type="radio" name="q1" value="3" id="correct-answer"> <strong>4 теста</strong>
+            </label>
+            <label>
+                <input type="radio" name="q1" value="4"> 8 тестов
+            </label>
+        </div>
+
+        <button onclick="checkAnswer()">Проверить ответ</button>
+
+        <div id="feedback" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ Зачем нужна parametrize:</strong>
+        <ul>
+            <li><strong>DRY принцип:</strong> Не дублировать код для разных данных</li>
+            <li><strong>Edge cases:</strong> Легко проверить граничные значения (0, -1, MAX_INT)</li>
+            <li><strong>Читаемость:</strong> Все тест-кейсы в одном месте</li>
+            <li><strong>Масштабируемость:</strong> Добавить новый кейс = добавить одну строку</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> 4 набора данных = 4 отдельных теста. Pytest создаст test_sum[1-2], test_sum[3-4], test_sum[5-6], test_sum[7-8] 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай ещё раз: сколько пар (x, y) в списке? Для каждой пары будет отдельный тест 🤔</div>';
+            }
+        }
+    </script>
+</body>
+</html>

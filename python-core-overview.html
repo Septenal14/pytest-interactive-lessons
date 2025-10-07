@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Core: Types Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🐍 Python Types: Полная карта типов данных</h2>
+
+    <p>Посмотри на схему — все основные типы данных в Python:</p>
+
+    <div class="mermaid">
+flowchart TD
+    A[Python Types] --> B[int - целые числа]
+    A --> C[float - дробные]
+    A --> D[str - строки]
+    A --> E[bool - True/False]
+    A --> F[list - списки]
+    A --> G[dict - словари]
+    A --> H[tuple - кортежи]
+    A --> I[set - множества]
+
+    B --> B1[age = 25<br>count = 100<br>negative = -10]
+    C --> C1[price = 19.99<br>pi = 3.14<br>temp = -5.5]
+    D --> D1[name = 'John'<br>email = 'test@mail.com'<br>text = 'Hello World']
+    E --> E1[is_active = True<br>has_access = False<br>is_logged_in = True]
+    F --> F1[numbers = [1, 2, 3]<br>names = ['Alice', 'Bob']<br>mixed = [1, 'text', True]]
+    G --> G1[user = name: 'John', age: 25<br>config = key: 'value'<br>response = status: 200]
+    H --> H1[coords = 10, 20<br>rgb = 255, 0, 0<br>immutable = 'a', 'b', 'c']
+    I --> I1[unique = 1, 2, 3<br>tags = 'python', 'qa'<br>no_duplicates = 1, 1, 2 → 1, 2]
+
+    style B fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style C fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    style D fill:#FFE4B5,stroke:#ff9800,stroke-width:2px
+    style E fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style F fill:#DDA0DD,stroke:#9c27b0,stroke-width:2px
+    style G fill:#F0E68C,stroke:#cddc39,stroke-width:2px
+    style H fill:#FFD700,stroke:#ffc107,stroke-width:2px
+    style I fill:#FFA07A,stroke:#ff5722,stroke-width:2px
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Пройди глазами по схеме:</strong>
+        <ol>
+            <li><strong>int, float, str, bool</strong> — примитивные типы (основа основ)</li>
+            <li><strong>list</strong> — изменяемый список (можно добавлять/удалять элементы)</li>
+            <li><strong>tuple</strong> — НЕизменяемый список (создал и всё, менять нельзя)</li>
+            <li><strong>dict</strong> — пары ключ-значение (как JSON)</li>
+            <li><strong>set</strong> — уникальные элементы (автоматически убирает дубликаты)</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>🎯 Quick Check: Проверь себя</h2>
+
+    <div class="quiz-container">
+        <p><strong>Вопрос:</strong> Какой тип данных НЕ позволяет изменять элементы после создания?</p>
+
+        <div style="margin: 15px 0;">
+            <label>
+                <input type="radio" name="q1" value="1"> list
+            </label>
+            <label>
+                <input type="radio" name="q1" value="2" id="correct-answer"> <strong>tuple</strong>
+            </label>
+            <label>
+                <input type="radio" name="q1" value="3"> dict
+            </label>
+            <label>
+                <input type="radio" name="q1" value="4"> set
+            </label>
+        </div>
+
+        <button onclick="checkAnswer()">Проверить ответ</button>
+
+        <div id="feedback" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ Когда что использовать:</strong>
+        <ul>
+            <li><strong>int/float:</strong> Числа (возраст, цена, счётчики)</li>
+            <li><strong>str:</strong> Текст (имена, email, сообщения)</li>
+            <li><strong>bool:</strong> Флаги (is_active, has_access)</li>
+            <li><strong>list:</strong> Упорядоченная коллекция (пользователи, задачи)</li>
+            <li><strong>dict:</strong> Данные с ключами (JSON, конфиг, API response)</li>
+            <li><strong>tuple:</strong> Неизменяемые данные (координаты, константы)</li>
+            <li><strong>set:</strong> Уникальные элементы (теги, категории)</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> Tuple (кортеж) — это immutable тип. После создания coords = (10, 20) ты НЕ можешь сделать coords[0] = 30 (получишь TypeError) 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай ещё раз: list, dict, set — всё это можно менять. А вот tuple создаётся один раз и всё 🤔</div>';
+            }
+        }
+    </script>
+</body>
+</html>

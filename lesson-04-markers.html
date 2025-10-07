@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 04: Markers - Test Organization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🏷️ Markers: Организация тестов</h2>
+
+    <p>Посмотри на схему — так работают pytest markers:</p>
+
+    <div class="mermaid">
+flowchart TD
+    A[Все тесты] --> B[@pytest.mark.smoke]
+    A --> C[@pytest.mark.regression]
+    A --> D[@pytest.mark.slow]
+    A --> E[@pytest.mark.api]
+
+    B --> F[test_login]
+    B --> G[test_homepage]
+
+    C --> H[test_full_flow]
+    C --> I[test_edge_cases]
+    C --> J[test_integrations]
+
+    D --> K[test_load_1000_users]
+    D --> L[test_big_data_import]
+
+    E --> M[test_api_auth]
+    E --> N[test_api_endpoints]
+
+    O[Запуск: pytest -m smoke] --> P{Какие тесты?}
+    P --> Q[Только @pytest.mark.smoke]
+    Q --> R[✅ test_login<br>✅ test_homepage]
+
+    S[Запуск: pytest -m 'not slow'] --> T{Какие тесты?}
+    T --> U[Все КРОМЕ @pytest.mark.slow]
+    U --> V[✅ All except slow tests]
+
+    style B fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style C fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    style D fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style E fill:#FFE4B5,stroke:#ff9800,stroke-width:2px
+    style R fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style V fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Пройди глазами по схеме:</strong>
+        <ol>
+            <li><strong>Маркировка:</strong> Группируем тесты по категориям (<code>@pytest.mark.smoke</code>)</li>
+            <li><strong>Фильтрация:</strong> Запускаем только нужные тесты (<code>pytest -m smoke</code>)</li>
+            <li><strong>Инверсия:</strong> Исключаем медленные (<code>pytest -m "not slow"</code>)</li>
+            <li><strong>Комбинации:</strong> Можно комбинировать (<code>pytest -m "smoke and api"</code>)</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>🎯 Quick Check: Проверь себя</h2>
+
+    <div class="quiz-container">
+        <p><strong>Вопрос:</strong> Что выполнит команда <code>pytest -m "smoke"</code>?</p>
+
+        <div style="margin: 15px 0;">
+            <label>
+                <input type="radio" name="q1" value="1"> Все тесты
+            </label>
+            <label>
+                <input type="radio" name="q1" value="2" id="correct-answer"> <strong>Только тесты с декоратором @pytest.mark.smoke</strong>
+            </label>
+            <label>
+                <input type="radio" name="q1" value="3"> Все тесты кроме @pytest.mark.smoke
+            </label>
+            <label>
+                <input type="radio" name="q1" value="4"> Тесты из файла test_smoke.py
+            </label>
+        </div>
+
+        <button onclick="checkAnswer()">Проверить ответ</button>
+
+        <div id="feedback" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ Популярные markers в реальных проектах:</strong>
+        <ul>
+            <li><strong>@pytest.mark.smoke</strong> — критичные тесты, запускаются перед каждым коммитом (2-5 минут)</li>
+            <li><strong>@pytest.mark.regression</strong> — полный набор тестов перед релизом (1-2 часа)</li>
+            <li><strong>@pytest.mark.slow</strong> — медленные тесты, запускаются ночью</li>
+            <li><strong>@pytest.mark.skip</strong> — временно пропустить тест (например, баг в продукте)</li>
+            <li><strong>@pytest.mark.xfail</strong> — ожидаем падение (например, известный баг)</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> Флаг -m фильтрует тесты по marker. Только тесты с @pytest.mark.smoke будут запущены 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай ещё раз: -m означает "marker", а "smoke" — это имя marker\'а 🤔</div>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 02: Fixtures - Lifecycle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔧 Lifecycle Fixtures: Setup и Teardown</h2>
+
+    <p>Посмотри на схему — так pytest управляет fixtures:</p>
+
+    <div class="mermaid">
+flowchart TD
+    A[Test запускается] --> B[Setup: создай данные]
+    B --> C[@pytest.fixture<br>def browser:]
+    C --> D[driver = webdriver.Chrome]
+    D --> E[return driver]
+    E --> F[Test получил fixture]
+    F --> G[def test_login browser:]
+    G --> H[browser.get 'https://app.com']
+    H --> I[assert browser.title]
+    I --> J{Test прошёл?}
+    J -->|✅ Passed| K[Teardown: очисти]
+    J -->|❌ Failed| K
+    K --> L[browser.quit]
+    L --> M[Fixture уничтожена]
+
+    style C fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    style G fill:#FFE4B5,stroke:#ff9800,stroke-width:2px
+    style J fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style L fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Пройди глазами по схеме:</strong>
+        <ol>
+            <li><strong>Setup:</strong> Pytest создаёт fixture (например, браузер)</li>
+            <li><strong>Test execution:</strong> Тест использует fixture</li>
+            <li><strong>Teardown:</strong> Pytest автоматически вызывает cleanup (закрывает браузер)</li>
+            <li><strong>Важно:</strong> Teardown происходит ВСЕГДА (даже если тест упал)</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>🎯 Quick Check: Проверь себя</h2>
+
+    <div class="quiz-container">
+        <p><strong>Вопрос:</strong> Когда выполняется teardown в fixture?</p>
+
+        <div style="margin: 15px 0;">
+            <label>
+                <input type="radio" name="q1" value="1"> Только если тест прошёл успешно
+            </label>
+            <label>
+                <input type="radio" name="q1" value="2"> Только если тест упал
+            </label>
+            <label>
+                <input type="radio" name="q1" value="3" id="correct-answer"> <strong>Всегда, независимо от результата теста</strong>
+            </label>
+            <label>
+                <input type="radio" name="q1" value="4"> Только если явно вызвать cleanup()
+            </label>
+        </div>
+
+        <button onclick="checkAnswer()">Проверить ответ</button>
+
+        <div id="feedback" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ Зачем нужны fixtures:</strong>
+        <ul>
+            <li><strong>Setup:</strong> Подготовка тестовых данных (создать браузер, подключиться к БД)</li>
+            <li><strong>Teardown:</strong> Автоматическая очистка (закрыть браузер, удалить тестовые данные)</li>
+            <li><strong>Переиспользование:</strong> Одна fixture для многих тестов</li>
+            <li><strong>Изоляция:</strong> Каждый тест получает свежую fixture (по умолчанию)</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> Teardown выполняется ВСЕГДА — это гарантирует, что ресурсы будут освобождены даже при падении теста 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай ещё раз: если браузер не закрыть после падения теста, он так и останется висеть в памяти 🤔</div>';
+            }
+        }
+    </script>
+</body>
+</html>

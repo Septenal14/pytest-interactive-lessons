@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 05: Assertions & Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.05em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background: #e3f2fd;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        hr {
+            margin: 40px 0;
+            border: none;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>✅ Assertions: Как pytest проверяет результат</h2>
+
+    <p>Посмотри на схему — так pytest обрабатывает assert и генерирует отчёты:</p>
+
+    <div class="mermaid">
+flowchart TD
+    A[def test_login:] --> B[user = login 'admin', 'pass']
+    B --> C[assert user.is_authenticated]
+    C --> D{Условие True?}
+
+    D -->|✅ True| E[Test PASSED]
+    E --> F[Никакого вывода]
+    F --> G[. - точка в терминале]
+
+    D -->|❌ False| H[AssertionError]
+    H --> I[Pytest магия:<br>Introspection]
+    I --> J[Показать:<br>- Где упал<br>- Что ожидали<br>- Что получили]
+    J --> K[Traceback с деталями]
+    K --> L[F - буква F в терминале]
+
+    G --> M[Финальный отчёт]
+    L --> M
+    M --> N[📊 1 passed, 0 failed<br>или<br>0 passed, 1 failed]
+
+    style E fill:#90EE90,stroke:#2d7a2d,stroke-width:2px
+    style H fill:#FFB6C6,stroke:#d32f2f,stroke-width:2px
+    style I fill:#FFE4B5,stroke:#ff9800,stroke-width:2px
+    style N fill:#87CEEB,stroke:#1976d2,stroke-width:2px
+    </div>
+
+    <div class="info-box">
+        <strong>💡 Пройди глазами по схеме:</strong>
+        <ol>
+            <li><strong>Assert:</strong> Pytest проверяет условие (True/False)</li>
+            <li><strong>Passed:</strong> Если True — тест проходит, никакого вывода (просто точка)</li>
+            <li><strong>Failed:</strong> Если False — pytest показывает ДЕТАЛЬНЫЙ traceback</li>
+            <li><strong>Introspection:</strong> Pytest "раскрывает" assert и показывает значения переменных</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>🎯 Quick Check: Проверь себя</h2>
+
+    <div class="quiz-container">
+        <p><strong>Вопрос:</strong> В чем главное преимущество pytest assert перед стандартным unittest?</p>
+
+        <div style="margin: 15px 0;">
+            <label>
+                <input type="radio" name="q1" value="1"> Pytest быстрее выполняет assert
+            </label>
+            <label>
+                <input type="radio" name="q1" value="2" id="correct-answer"> <strong>Pytest показывает ДЕТАЛЬНЫЙ traceback с значениями переменных</strong>
+            </label>
+            <label>
+                <input type="radio" name="q1" value="3"> Pytest не требует import
+            </label>
+            <label>
+                <input type="radio" name="q1" value="4"> Pytest автоматически исправляет ошибки
+            </label>
+        </div>
+
+        <button onclick="checkAnswer()">Проверить ответ</button>
+
+        <div id="feedback" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="success-box">
+        <strong>✅ Примеры assert в pytest:</strong>
+        <ul>
+            <li><code>assert result == 5</code> — простое сравнение</li>
+            <li><code>assert "error" in response.text</code> — проверка вхождения</li>
+            <li><code>assert user.is_admin is True</code> — проверка булевых значений</li>
+            <li><code>assert len(users) > 0</code> — проверка длины списка</li>
+            <li><code>assert response.status_code == 200, "API returned error"</code> — assert с сообщением</li>
+        </ul>
+        <p style="margin-top: 10px;"><strong>Совет:</strong> Добавляй сообщения к assert для быстрой диагностики!</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        function checkAnswer() {
+            const correct = document.getElementById('correct-answer');
+            const feedback = document.getElementById('feedback');
+
+            if (correct.checked) {
+                feedback.innerHTML = '<div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 10px;">✅ <strong>Правильно!</strong> Pytest использует introspection для "раскрытия" assert и показывает значения ВСЕХ переменных в выражении. Это экономит часы отладки! 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div style="background: #fff3cd; border-left: 4px solid #856404; padding: 15px; border-radius: 4px; margin-top: 10px;">❌ <strong>Неправильно.</strong> Подумай ещё раз: когда тест падает, что тебе важнее — скорость или понимание ПОЧЕМУ он упал? 🤔</div>';
+            }
+        }
+    </script>
+</body>
+</html>
