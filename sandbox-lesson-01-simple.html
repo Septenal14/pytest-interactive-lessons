@@ -117,22 +117,7 @@
             <span class="sandbox-title">🐍 Python + Pytest Sandbox</span>
             <button class="run-button" onclick="runPytest()">▶️ Запустить Pytest</button>
         </div>
-        <div id="editor"># Функция для тестирования
-def add(a, b):
-    return a + b
-
-# Тест 1: Успешный тест
-def test_add_positive():
-    result = add(2, 3)
-    assert result == 5, "2 + 3 должно быть 5"
-
-# Тест 2: Специально падающий тест (исправь его!)
-def test_add_negative():
-    result = add(-1, -1)
-    assert result == 0, "Исправь этот assert! -1 + -1 = ?"
-
-# Тест 3: Добавь свой тест здесь!
-</div>
+        <div id="editor"></div>
         <div id="output"><span class="output-info">💡 Нажми "▶️ Запустить Pytest" чтобы увидеть результаты</span></div>
     </div>
 
@@ -151,12 +136,29 @@ def test_add_negative():
     <script>
         let editor;
 
+        const defaultCode = `# Функция для тестирования
+def add(a, b):
+    return a + b
+
+# Тест 1: Успешный тест
+def test_add_positive():
+    result = add(2, 3)
+    assert result == 5, "2 + 3 должно быть 5"
+
+# Тест 2: Специально падающий тест (исправь его!)
+def test_add_negative():
+    result = add(-1, -1)
+    assert result == 0, "Исправь этот assert! -1 + -1 = ?"
+
+# Тест 3: Добавь свой тест здесь!
+`;
+
         // Initialize Monaco Editor
         require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
 
         require(['vs/editor/editor.main'], function() {
             editor = monaco.editor.create(document.getElementById('editor'), {
-                value: document.getElementById('editor').textContent,
+                value: defaultCode,
                 language: 'python',
                 theme: 'vs-dark',
                 fontSize: 13,
