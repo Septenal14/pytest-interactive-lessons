@@ -1,0 +1,16 @@
+{
+  "title": "Lesson 01: Practice - Complex Types",
+  "lesson": "python_core_01",
+  "code": "# Работа с разными типами данных\nname = \"Alice\"\nage = ???  # Возраст 30 (число)\nheight = ???  # Рост 1.75 (дробное число)\nis_student = ???  # Студент? True\n\n# Проверки\nassert type(name) == str\nassert type(age) == int\nassert age == 30\nassert type(height) == float\nassert height == 1.75\nassert type(is_student) == bool\nassert is_student == True",
+  "expected_fixes": [
+    {"pattern": "age = 30", "test": "age is int"},
+    {"pattern": "height = 1.75", "test": "height is float"},
+    {"pattern": "is_student = True", "test": "is_student is bool"}
+  ],
+  "hints": [
+    "age должен быть int (целое число): 30",
+    "height должен быть float (дробное): 1.75",
+    "is_student должен быть bool: True"
+  ],
+  "success_message": "🎯 Отлично! Ты освоил все базовые типы данных: str, int, float, bool!"
+}

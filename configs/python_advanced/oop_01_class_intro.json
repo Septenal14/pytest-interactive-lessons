@@ -1,0 +1,16 @@
+{
+  "title": "Python Advanced: ООП - Создай класс",
+  "lesson": "python_advanced_oop",
+  "code": "# Создай свой первый класс\nclass User:\n    def __init__(self, name, age):\n        self.name = ???  # Исправь!\n        self.age = ???   # Исправь!\n    \n    def greet(self):\n        return f\"Hello, my name is {self.???}\"  # Исправь!\n\n# Создай пользователя\nuser = User(\"Alice\", 25)\n\n# Тесты\nassert user.name == \"Alice\"\nassert user.age == 25\nassert user.greet() == \"Hello, my name is Alice\"",
+  "expected_fixes": [
+    {"pattern": "self.name = name", "test": "initialize name attribute"},
+    {"pattern": "self.age = age", "test": "initialize age attribute"},
+    {"pattern": "self.name", "test": "use self.name in method"}
+  ],
+  "hints": [
+    "Сохрани параметр name в атрибут: self.name = name",
+    "Сохрани параметр age в атрибут: self.age = age",
+    "Используй атрибут в методе: self.name"
+  ],
+  "success_message": "🎓 Поздравляю! Ты создал свой первый класс в Python! Это основа ООП!"
+}

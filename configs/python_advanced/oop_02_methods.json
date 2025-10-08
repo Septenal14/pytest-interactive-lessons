@@ -1,0 +1,14 @@
+{
+  "title": "Python Advanced: ООП - Методы класса",
+  "lesson": "python_advanced_oop",
+  "code": "# Класс с несколькими методами\nclass BankAccount:\n    def __init__(self, balance):\n        self.balance = balance\n    \n    def deposit(self, amount):\n        self.balance += ???  # Исправь!\n    \n    def withdraw(self, amount):\n        if self.balance >= amount:\n            self.balance -= ???  # Исправь!\n            return True\n        return False\n\naccount = BankAccount(100)\naccount.deposit(50)\naccount.withdraw(30)\n\n# Тесты\nassert account.balance == 120  # 100 + 50 - 30",
+  "expected_fixes": [
+    {"pattern": "self.balance += amount", "test": "deposit adds amount"},
+    {"pattern": "self.balance -= amount", "test": "withdraw subtracts amount"}
+  ],
+  "hints": [
+    "При пополнении: self.balance += amount",
+    "При снятии: self.balance -= amount"
+  ],
+  "success_message": "💰 Отлично! Ты освоил методы класса - это поведение объектов!"
+}

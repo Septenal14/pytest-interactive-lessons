@@ -1,0 +1,14 @@
+{
+  "title": "Lesson 04: Practice - List Comprehension",
+  "lesson": "python_core_04",
+  "code": "# List comprehension для фильтрации\nnumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n# Получи только чётные числа\nevens = [??? for ??? in ??? if ??? % 2 == 0]  # Исправь!\n\n# Получи квадраты чисел больше 5\nsquares = [??? for ??? in ??? if ??? > 5]  # Исправь!\n\n# Тесты\nassert evens == [2, 4, 6, 8, 10]\nassert squares == [36, 49, 64, 81, 100]",
+  "expected_fixes": [
+    {"pattern": "evens = [x for x in numbers if x % 2 == 0]", "test": "filter even numbers"},
+    {"pattern": "squares = [x**2 for x in numbers if x > 5]", "test": "squares of numbers > 5"}
+  ],
+  "hints": [
+    "Чётные числа: [x for x in numbers if x % 2 == 0]",
+    "Квадраты чисел > 5: [x**2 for x in numbers if x > 5]"
+  ],
+  "success_message": "⚡ Офигенно! List comprehension - это супер-сила Python для работы со списками!"
+}

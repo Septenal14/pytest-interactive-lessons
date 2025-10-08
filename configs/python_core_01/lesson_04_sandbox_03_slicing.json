@@ -1,0 +1,16 @@
+{
+  "title": "Lesson 04: List Slicing - Extract Parts",
+  "lesson": "python_core_04",
+  "code": "# Срезы списков\nfruits = [\"apple\", \"banana\", \"cherry\", \"date\", \"elderberry\"]\n\n# Получи первые 3 элемента\nfirst_three = fruits[???:???]  # Исправь!\n\n# Получи последние 2 элемента\nlast_two = fruits[???:]  # Исправь!\n\n# Получи средние элементы (без первого и последнего)\nmiddle = fruits[???:???]  # Исправь!\n\n# Тесты\nassert first_three == [\"apple\", \"banana\", \"cherry\"]\nassert last_two == [\"date\", \"elderberry\"]\nassert middle == [\"banana\", \"cherry\", \"date\"]",
+  "expected_fixes": [
+    {"pattern": "fruits[0:3]", "test": "first three elements"},
+    {"pattern": "fruits[-2:]", "test": "last two elements"},
+    {"pattern": "fruits[1:4]", "test": "middle elements"}
+  ],
+  "hints": [
+    "Первые 3: fruits[0:3] или fruits[:3]",
+    "Последние 2: fruits[-2:] (отрицательный индекс)",
+    "Средние (без первого и последнего): fruits[1:4] или fruits[1:-1]"
+  ],
+  "success_message": "✂️ Красава! Ты освоил срезы списков - мощный инструмент Python!"
+}

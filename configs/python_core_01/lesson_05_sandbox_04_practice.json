@@ -1,0 +1,16 @@
+{
+  "title": "Lesson 05: Practice - Nested Dicts",
+  "lesson": "python_core_05",
+  "code": "# Вложенные словари (JSON-подобная структура)\ncompany = {\n    \"name\": \"TechCorp\",\n    \"employees\": [\n        {\"name\": \"Alice\", \"role\": \"Developer\"},\n        {\"name\": \"Bob\", \"role\": \"Manager\"}\n    ]\n}\n\n# Получи имя компании\ncompany_name = company[???]  # Исправь!\n\n# Получи имя первого сотрудника\nfirst_employee = company[???][???][???]  # Исправь!\n\n# Получи роль второго сотрудника\nsecond_role = company[???][???][???]  # Исправь!\n\n# Тесты\nassert company_name == \"TechCorp\"\nassert first_employee == \"Alice\"\nassert second_role == \"Manager\"",
+  "expected_fixes": [
+    {"pattern": "company[\"name\"]", "test": "get company name"},
+    {"pattern": "company[\"employees\"][0][\"name\"]", "test": "get first employee name"},
+    {"pattern": "company[\"employees\"][1][\"role\"]", "test": "get second employee role"}
+  ],
+  "hints": [
+    "Имя компании: company[\"name\"]",
+    "Первый сотрудник: company[\"employees\"][0][\"name\"]",
+    "Роль второго: company[\"employees\"][1][\"role\"]"
+  ],
+  "success_message": "🗂️ Невероятно! Ты освоил вложенные словари - основу работы с JSON API!"
+}

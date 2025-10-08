@@ -1,0 +1,14 @@
+{
+  "title": "Lesson 02: If/Elif/Else - Grade System",
+  "lesson": "python_core_02",
+  "code": "# Система оценок\ndef get_grade(score):\n    if score >= 90:\n        return \"A\"\n    elif score >= ???:  # Исправь! B от 80\n        return \"B\"\n    elif score >= ???:  # Исправь! C от 70\n        return \"C\"\n    else:\n        return \"F\"\n\n# Тесты\nassert get_grade(95) == \"A\"\nassert get_grade(85) == \"B\"\nassert get_grade(75) == \"C\"\nassert get_grade(65) == \"F\"",
+  "expected_fixes": [
+    {"pattern": "score >= 80", "test": "grade B threshold"},
+    {"pattern": "score >= 70", "test": "grade C threshold"}
+  ],
+  "hints": [
+    "B начинается от 80 баллов",
+    "C начинается от 70 баллов"
+  ],
+  "success_message": "📊 Красава! Ты освоил множественные условия if/elif/else!"
+}

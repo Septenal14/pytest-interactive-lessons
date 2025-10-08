@@ -1,0 +1,20 @@
+{
+  "title": "Exceptions: Найди ошибку - ValueError",
+  "lesson": "python_advanced_exceptions",
+  "fail_first": true,
+  "initial_error": {
+    "type": "ValueError",
+    "message": "invalid literal for int() with base 10: 'abc'",
+    "line": 3,
+    "explanation": "Строку 'abc' нельзя преобразовать в число! Нужна проверка или try/except."
+  },
+  "code": "# Запусти — увидишь ошибку!\nuser_input = \"abc\"\nage = int(user_input)  # ❌ ОШИБКА! 'abc' не число!\n\nprint(f\"Age: {age}\")\n\n# Исправь — добавь try/except:\n# try:\n#     age = int(user_input)\n# except ValueError:\n#     age = 0  # значение по умолчанию",
+  "expected_fixes": [
+    {"pattern": "except ValueError", "test": "catches value error"}
+  ],
+  "hints": [
+    "Оберни int(user_input) в try/except",
+    "Ловите ValueError когда строка не число"
+  ],
+  "success_message": "🎯 Красава! Ты освоил обработку ValueError - частая ошибка при работе с вводом!"
+}

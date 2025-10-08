@@ -1,0 +1,13 @@
+{
+  "title": "Python Advanced: Try/Except - Basic",
+  "lesson": "python_advanced_exceptions",
+  "code": "# Обработка исключений\ndef safe_divide(a, b):\n    try:\n        result = a / b\n        return result\n    except ???:  # Какое исключение ловить?\n        return \"Error: cannot divide by zero\"\n\n# Тесты\nassert safe_divide(10, 2) == 5.0\nassert safe_divide(10, 0) == \"Error: cannot divide by zero\"",
+  "expected_fixes": [
+    {"pattern": "except ZeroDivisionError", "test": "catches zero division"}
+  ],
+  "hints": [
+    "Используй: except ZeroDivisionError:",
+    "Это исключение возникает при делении на 0"
+  ],
+  "success_message": "🛡️ Отлично! Ты освоил обработку исключений - основу defensive programming!"
+}

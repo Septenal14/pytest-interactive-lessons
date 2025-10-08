@@ -1,0 +1,14 @@
+{
+  "title": "Lesson 02: Practice - For Loop Sum",
+  "lesson": "python_core_02",
+  "code": "# Напиши цикл для подсчёта суммы\ndef calculate_sum(numbers):\n    total = 0\n    for ??? in ???:  # Исправь цикл!\n        total += ???  # Добавь число к total\n    return total\n\n# Тесты\nassert calculate_sum([1, 2, 3]) == 6\nassert calculate_sum([10, 20, 30]) == 60\nassert calculate_sum([5, 5, 5, 5]) == 20",
+  "expected_fixes": [
+    {"pattern": "for num in numbers", "test": "correct loop"},
+    {"pattern": "total += num", "test": "accumulate sum"}
+  ],
+  "hints": [
+    "Используй: for num in numbers:",
+    "Добавляй каждое число к total: total += num"
+  ],
+  "success_message": "🔄 Отлично! Ты освоил цикл for для обработки списков!"
+}

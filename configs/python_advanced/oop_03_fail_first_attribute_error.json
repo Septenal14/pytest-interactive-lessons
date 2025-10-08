@@ -1,0 +1,20 @@
+{
+  "title": "ООП: Найди ошибку - AttributeError",
+  "lesson": "python_advanced_oop",
+  "fail_first": true,
+  "initial_error": {
+    "type": "AttributeError",
+    "message": "'User' object has no attribute 'email'",
+    "line": 11,
+    "explanation": "Атрибута 'email' нет в классе! Добавь его в __init__."
+  },
+  "code": "# Запусти — увидишь ошибку!\nclass User:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n        # ❌ ОШИБКА! Забыли добавить email!\n\nuser = User(\"Alice\", 25)\nuser.email = \"alice@example.com\"  # Работает\n\n# Но при создании нового пользователя:\nuser2 = User(\"Bob\", 30)\nprint(user2.email)  # ❌ AttributeError!\n\n# Исправь: добавь self.email = \"\" в __init__",
+  "expected_fixes": [
+    {"pattern": "self.email = ", "test": "initialize email attribute"}
+  ],
+  "hints": [
+    "Добавь в __init__: self.email = \"\"",
+    "Или сделай параметр: def __init__(self, name, age, email=\"\")"
+  ],
+  "success_message": "🔧 Отлично! Ты понял что все атрибуты нужно инициализировать в __init__!"
+}

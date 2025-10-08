@@ -1,0 +1,14 @@
+{
+  "title": "Lesson 03: Function with Parameters",
+  "lesson": "python_core_03",
+  "code": "# Функция с несколькими параметрами\ndef greet_user(name, age):\n    message = f\"Hello, {???}! You are {???} years old.\"  # Исправь!\n    return message\n\n# Тесты\nassert greet_user(\"Alice\", 25) == \"Hello, Alice! You are 25 years old.\"\nassert greet_user(\"Bob\", 30) == \"Hello, Bob! You are 30 years old.\"",
+  "expected_fixes": [
+    {"pattern": "{name}", "test": "uses name parameter"},
+    {"pattern": "{age}", "test": "uses age parameter"}
+  ],
+  "hints": [
+    "Используй параметр name в f-строке: {name}",
+    "Используй параметр age в f-строке: {age}"
+  ],
+  "success_message": "🎯 Красава! Ты освоил работу с параметрами функций!"
+}

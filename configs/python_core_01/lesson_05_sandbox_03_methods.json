@@ -1,0 +1,16 @@
+{
+  "title": "Lesson 05: Dict Methods - .get(), .keys(), .values()",
+  "lesson": "python_core_05",
+  "code": "# Методы словарей\nuser = {\n    \"name\": \"Alice\",\n    \"age\": 25,\n    \"city\": \"Moscow\"\n}\n\n# Безопасное получение значения\nemail = user.???(\"email\", \"not_provided\")  # Исправь!\n\n# Получи все ключи\nkeys_list = list(user.???())  # Исправь!\n\n# Получи все значения\nvalues_list = list(user.???())  # Исправь!\n\n# Тесты\nassert email == \"not_provided\"\nassert \"name\" in keys_list\nassert \"Alice\" in values_list\nassert len(keys_list) == 3",
+  "expected_fixes": [
+    {"pattern": "user.get(\"email\", \"not_provided\")", "test": "safe dict access"},
+    {"pattern": "user.keys()", "test": "get all keys"},
+    {"pattern": "user.values()", "test": "get all values"}
+  ],
+  "hints": [
+    "Безопасное получение: user.get(ключ, значение_по_умолчанию)",
+    "Все ключи: user.keys()",
+    "Все значения: user.values()"
+  ],
+  "success_message": "🔑 Отлично! Ты освоил методы словарей - .get(), .keys(), .values()!"
+}
